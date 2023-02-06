@@ -15,12 +15,16 @@
     <link rel="stylesheet" href="{% static 'assets/css/uikit.css' %}">
     <link rel="stylesheet" href="{% static 'assets/css/style.css' %}">
     <link rel="stylesheet" href="{% static 'assets/css/tailwind.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
 </head>
 
 <body>
 
     <header>
         <div class="header_inner">
+            <form action="/search" method="POST">
+                {% csrf_token %}
             <div class="left-side">
                 <!-- Logo -->
                 <div id="logo" class=" uk-hidden@s">
@@ -35,17 +39,12 @@
                             <i class="uil-bars"></i>
                         </div>-->
 
-                <div class="header_search">
-                    <input type="text" placeholder="Search for username..">
-                    <div class="icon-search">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                        </svg>
-                    </div>
-                </div>
-
+                <!-- <div class="header_search"> -->
+                    <input type="text" name="username" placeholder="Search for username.."> &nbsp; &nbsp;
+                    <button type="submit"><i class="fa fa-search fa-1x"></i></button>
+                <!-- </div> -->
             </div>
+        </form>
             <div class="right-side lg:pr-4">
                 <!-- upload -->
                 <a href="#"
@@ -188,6 +187,7 @@
                 </a>
                 <div uk-drop="mode: click;offset:9" class="header_dropdown profile_dropdown border-t">
                     <ul>
+                        <li><a href="/profile/{{user}}"> My Profile </a> </li>
                         <li><a href="settings"> Account setting </a> </li>
                         <li><a href="logout"> Log Out</a></li>
                     </ul>
@@ -219,7 +219,7 @@
                                         class="bg-gray-200 border border-white rounded-full w-8 h-8">
                                 </div>
                             </a> -->
-                            <span class="block capitalize font-semibold "><a> @{{post.user}} </a></span>
+                            <span class="block capitalize font-semibold "><a href="/profile/{{post.user}}"> @{{post.user}} </a></span>
                         </div>
                         <div>
                             <a href="#"> <i
@@ -281,7 +281,7 @@
                                 </div>
 
                             </a> -->
-                            <a href="#" class="flex items-center space-x-2 flex-1 justify-end">
+                            <a href="{{post.image.url}}" class="flex items-center space-x-2 flex-1 justify-end" download>
                                 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
                                     aria-hidden="true" role="img" width="25" height="25"
                                     preserveAspectRatio="xMidYMid meet" viewBox="0 0 16 16">
@@ -335,7 +335,7 @@
                         </div> -->
 
                         <p>
-                            <a> <strong>{{post.user}}</strong> </a>{{post.caption}} 
+                            <a href="/profile/{{post.user}}"> <strong>{{post.user}}</strong> </a>{{post.caption}} 
                         </p>
 
                         <!-- <div class="bg-gray-100 bg-gray-100 rounded-full rounded-md relative ">
