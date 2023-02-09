@@ -54,6 +54,9 @@ def index(request):
     )
 
 def signup(request):
+    if request.user.is_authenticated:
+        return redirect('index')
+
     if request.method == 'POST':
         username = request.POST['username']
         email = request.POST['email']
@@ -85,6 +88,9 @@ def signup(request):
         return render(request,'signup.html')
 
 def signin(request):
+    if request.user.is_authenticated:
+        return redirect('index')
+
     if request.method == 'POST':
         username = request.POST['username']
         password = request.POST['password']
